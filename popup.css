@@ -1,0 +1,179 @@
+:root {
+  color-scheme: light;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #fff;
+  color: #242a2e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  margin: 0;
+}
+
+.panel {
+  padding: 25px 24px 17px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 27px;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+}
+
+.eyebrow {
+  margin: 0 0 3px;
+  color: #8a9297;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 1.15px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 720;
+  letter-spacing: -0.45px;
+}
+
+h1 span {
+  color: #d95331;
+}
+
+.search label {
+  display: block;
+  margin-bottom: 9px;
+  color: #424a4f;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.search-row {
+  display: flex;
+  gap: 8px;
+  padding: 5px;
+  border: 1px solid #e7e9e9;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(25 36 42 / 5%);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.search-row:focus-within {
+  border-color: #e2775e;
+  box-shadow: 0 0 0 3px rgb(217 83 49 / 12%);
+}
+
+input {
+  width: 100%;
+  min-width: 0;
+  padding: 0 9px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #242a2e;
+  font: inherit;
+  font-size: 13px;
+}
+
+input::placeholder {
+  color: #9aa1a5;
+}
+
+input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+button {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: #d95331;
+  color: white;
+  cursor: pointer;
+  transition: background 140ms ease, transform 140ms ease;
+}
+
+button:hover {
+  background: #c44829;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #f1a18c;
+  outline-offset: 3px;
+}
+
+button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.hint {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  margin: 18px 1px 22px;
+}
+
+.hint-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: #62a875;
+  box-shadow: 0 0 0 3px #eaf5ed;
+}
+
+.hint p {
+  margin: 0;
+  color: #697277;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 13px;
+  border-top: 1px solid #eff0f0;
+  color: #92999d;
+  font-size: 10px;
+}
+
+footer a {
+  color: #555f64;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #c44829;
+}
