@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "HTML DuckDuckGo Search",
   "description": "Use DuckDuckGo's lightweight HTML search as your Chrome default search engine.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icons": {
     "16": "assets/icons/icon16.png",
     "48": "assets/icons/icon48.png",
@@ -12,13 +12,10 @@
     "default_title": "DuckDuckGo HTML'de ara",
     "default_popup": "popup.html"
   },
-  "chrome_settings_overrides": {
-    "search_provider": {
-      "name": "DuckDuckGo HTML",
-      "keyword": "duckduckgo.com",
-      "search_url": "https://html.duckduckgo.com/html/?q={searchTerms}",
-      "encoding": "UTF-8",
-      "is_default": true
-    }
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "omnibox": {
+    "keyword": "ddg"
   }
 }
