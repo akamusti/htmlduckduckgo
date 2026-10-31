@@ -11,6 +11,7 @@ class ExtensionPackageTests(unittest.TestCase):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["manifest_version"], 3)
+        self.assertEqual(manifest["version"], "0.0.1")
         provider = manifest["chrome_settings_overrides"]["search_provider"]
         self.assertTrue(provider["is_default"])
         self.assertEqual(
