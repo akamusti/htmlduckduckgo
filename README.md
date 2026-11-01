@@ -1,31 +1,42 @@
 # DuckDuckGo HTML Search
 
-Chrome araç çubuğundaki eklenti popup'ından veya adres çubuğunda `ddg` yazıp **Tab**'a bastıktan sonra arama yap. Aramalar DuckDuckGo'nun hafif HTML arayüzünde açılır.
+Search via the extension popup in the Chrome toolbar or by typing `ddg` followed by <kbd>Tab</kbd> in the address bar. All searches open directly in DuckDuckGo's lightweight HTML interface.
 
-## Platforma göre indirme
+---
 
-Chrome'un `chrome_settings_overrides` özelliği yalnızca macOS ve Windows'ta desteklenir. Linux veya ChromeOS'ta bu anahtar eklentinin yüklenmesini engelleyebilir.
+## Downloads & Installation
 
-- **Linux / ChromeOS / platformdan bağımsız:** `htmlduckduckgo-chrome.zip` dosyasını indirip çıkar, `chrome://extensions` sayfasından **Geliştirici modu → Paketlenmemiş öğe yükle** ile klasörü seç. Arama popup'ı ve `ddg` adres çubuğu kısayolu çalışır.
-- **macOS / Windows, DuckDuckGo'yu varsayılan yapmak için:** `htmlduckduckgo-chrome-desktop-search-override.zip` dosyasını indirip çıkar ve aynı şekilde klasörü yükle. Chrome varsayılan arama motoru değişikliğini onaylatabilir.
+> **Note:** Chrome's `chrome_settings_overrides` manifest key is only supported on **macOS** and **Windows**. Including this key on **Linux** or **ChromeOS** may cause installation to fail.
 
-ChromeOS veya Linux'ta eklenti kurulduktan sonra DuckDuckGo'yu Chrome ayarlarından varsayılan yapmak için **Ayarlar → Arama motoru → Arama motorlarını ve site aramasını yönet → Site araması ekle** bölümünde aşağıdaki değerleri kullan:
+* **Linux / ChromeOS / Cross-Platform:** 
+  Download and extract `htmlduckduckgo-chrome.zip`. Go to `chrome://extensions`, enable **Developer mode**, and select **Load unpacked** to load the extracted folder. Includes the extension popup and the `ddg` address bar shortcut.
+* **macOS / Windows (Default Search Engine Override):** 
+  Download and extract `htmlduckduckgo-chrome-desktop-search-override.zip` and load it using the same steps above. Chrome may ask for confirmation to override the default search engine.
 
-- Arama motoru: `DuckDuckGo HTML`
-- Kısayol: `duckduckgo.com`
-- URL: `https://html.duckduckgo.com/html/?q=%s`
+### Setting Default Search Engine on Linux & ChromeOS
 
-Ardından kaydı varsayılan yap. Bu adım Chrome'un platform kısıtlaması nedeniyle gereklidir; eklentiler Linux/ChromeOS'ta arama motoru ayarını manifest üzerinden değiştiremez.
+Due to Chrome platform restrictions, extensions cannot automatically modify default search engines via manifest settings on Linux or ChromeOS. To manually set DuckDuckGo HTML as default, navigate to `chrome://settings/searchEngines`, click **Add** under **Site search**, and enter:
 
-Her iki pakette de popup araması ve `ddg` + **Tab** adres çubuğu araması kullanılabilir.
+* **Search engine:** `DuckDuckGo HTML`
+* **Shortcut:** `duckduckgo.com`
+* **URL:** `https://html.duckduckgo.com/html/?q=%s`
 
-## Sürümü oluştur ve test et
+After adding, click the options menu next to the entry and select **Make default**.
 
-Python 3 gereklidir; ek paket kurulumu gerekmez.
+---
 
-```sh
+## Build & Test
+
+**Requirements:** Python 3 (no third-party packages required).
+
+```bash
+# Package the extension archives
 python3 scripts/package_extension.py
+
+# Run unit tests
 python3 -m unittest discover -s tests
 ```
 
-Betik platform kısıtlı manifest anahtarını içermeyen taşınabilir ZIP'i ve sadece macOS/Windows için arama motoru override'ı eklenmiş ZIP'i oluşturur.
+The build script generates two output packages:
+1. A portable ZIP package without platform-restricted manifest keys.
+2. A desktop ZIP package containing search engine overrides tailored for macOS and Windows.
