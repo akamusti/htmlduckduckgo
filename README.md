@@ -1,31 +1,61 @@
 # DuckDuckGo HTML Search
 
-Search via the extension popup in the Chrome toolbar or by typing `ddg` followed by <kbd>Tab</kbd> in the address bar. All searches open directly in DuckDuckGo's lightweight HTML interface.
+Search DuckDuckGo's lightweight HTML interface from the toolbar popup, or type `ddg`
+followed by <kbd>Tab</kbd> in the address bar.
 
 ---
 
-## Downloads & Installation
+## Downloads & installation
 
-> **Note:** Chrome's `chrome_settings_overrides` manifest key is only supported on **macOS** and **Windows**. Including this key on **Linux** or **ChromeOS** may cause installation to fail.
+> **Note:** Chrome's `chrome_settings_overrides` manifest key is supported only on **macOS**
+> and **Windows**. Including it on **Linux** or **ChromeOS** can make installation fail.
 
-* **Linux / ChromeOS / Cross-Platform:** 
-  Download and extract `htmlduckduckgo-chrome.zip`. Go to `chrome://extensions`, enable **Developer mode**, and select **Load unpacked** to load the extracted folder. Includes the extension popup and the `ddg` address bar shortcut.
-* **macOS / Windows (Default Search Engine Override):** 
-  Download and extract `htmlduckduckgo-chrome-desktop-search-override.zip` and load it using the same steps above. Chrome may ask for confirmation to override the default search engine.
+* **Linux / ChromeOS / cross-platform:**
+  Download and extract `htmlduckduckgo-chrome.zip`. Open `chrome://extensions`, enable
+  **Developer mode**, and choose **Load unpacked** to load the extracted folder. Includes the
+  popup and the `ddg` address bar shortcut.
+* **macOS / Windows (default search engine override):**
+  Download and extract `htmlduckduckgo-chrome-desktop-search-override.zip` and install it the
+  same way. Chrome may ask you to confirm the default search engine change.
 
-### Setting Default Search Engine on Linux & ChromeOS
+## Making it the default search engine on Linux & ChromeOS
 
-Due to Chrome platform restrictions, extensions cannot automatically modify default search engines via manifest settings on Linux or ChromeOS. To manually set DuckDuckGo HTML as default, navigate to `chrome://settings/searchEngines`, click **Add** under **Site search**, and enter:
+Chrome does not allow extensions to change the default search engine on Linux or ChromeOS, so
+there is no way to do this automatically from the extension. Use the **Set as default search
+engine** section in the popup for copyable values, or follow these steps:
 
-* **Search engine:** `DuckDuckGo HTML`
-* **Shortcut:** `duckduckgo.com`
-* **URL:** `https://html.duckduckgo.com/html/?q=%s`
+1. Open `chrome://settings/searchEngines`.
+2. Under **Site search**, choose **Add**.
+3. Enter these values:
+   * **Search engine:** `DuckDuckGo HTML`
+   * **Shortcut:** `duckduckgo.com`
+   * **URL:** `https://html.duckduckgo.com/html/?q=%s`
+4. Save, then open the entry's options menu and select **Make default**.
 
-After adding, click the options menu next to the entry and select **Make default**.
+### Fully automatic option for managed machines
+
+On Linux, an administrator can preconfigure the search engine with Chrome policy. Create
+`/etc/opt/chrome/policies/managed/duckduckgo-html.json` (for Chromium:
+`/etc/chromium/policies/managed/`) containing:
+
+```json
+{
+  "DefaultSearchProviderEnabled": true,
+  "DefaultSearchProviderName": "DuckDuckGo HTML",
+  "DefaultSearchProviderKeyword": "duckduckgo.com",
+  "DefaultSearchProviderSearchURL": "https://html.duckduckgo.com/html/?q={searchTerms}",
+  "DefaultSearchProviderEncodings": ["UTF-8"]
+}
+```
+
+This requires root, applies to every profile of that browser install, and locks the setting
+(the browser will show it as managed). On managed ChromeOS devices the equivalent setting lives
+in the Google Admin console under **Devices → Chrome → Settings → Users & browsers → Search
+provider**.
 
 ---
 
-## Build & Test
+## Build & test
 
 **Requirements:** Python 3 (no third-party packages required).
 
@@ -38,5 +68,6 @@ python3 -m unittest discover -s tests
 ```
 
 The build script generates two output packages:
-1. A portable ZIP package without platform-restricted manifest keys.
-2. A desktop ZIP package containing search engine overrides tailored for macOS and Windows.
+
+1. A portable ZIP without platform-restricted manifest keys.
+2. A desktop ZIP containing the search engine override for macOS and Windows.

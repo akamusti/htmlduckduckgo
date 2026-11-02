@@ -11,7 +11,8 @@ class ExtensionPackageTests(unittest.TestCase):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["manifest_version"], 3)
-        self.assertEqual(manifest["version"], "0.0.2")
+        self.assertEqual(manifest["version"], "0.1.0")
+        self.assertEqual(manifest["action"]["default_title"], "Search DuckDuckGo HTML")
         self.assertNotIn("chrome_settings_overrides", manifest)
         self.assertEqual(manifest["omnibox"]["keyword"], "ddg")
         self.assertEqual(manifest["background"]["service_worker"], "service-worker.js")
@@ -46,6 +47,14 @@ class ExtensionPackageTests(unittest.TestCase):
         self.assertIn('method="get"', popup)
         self.assertIn('name="q"', popup)
         self.assertIn('target="_blank"', popup)
+
+    def test_popup_documents_manual_default_search_setup(self):
+        popup = (ROOT / "popup.html").read_text(encoding="utf-8")
+
+        self.assertIn('lang="en"', popup)
+        self.assertIn("chrome://settings/searchEngines", popup)
+        for value in ("DuckDuckGo HTML", "duckduckgo.com", "https://html.duckduckgo.com/html/?q=%s"):
+            self.assertIn(f'data-copy="{value}"', popup)
 
     def test_release_zip_contains_runtime_files_only(self):
         archive_path = ROOT / "dist" / "htmlduckduckgo-chrome.zip"

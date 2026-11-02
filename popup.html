@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DuckDuckGo HTML'de ara</title>
+    <title>Search DuckDuckGo HTML</title>
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
@@ -11,16 +11,16 @@
       <header class="brand">
         <img class="brand-icon" src="assets/icons/icon48.png" alt="">
         <div>
-          <p class="eyebrow">HIZLI ARAMA</p>
+          <p class="eyebrow">QUICK SEARCH</p>
           <h1>DuckDuckGo <span>HTML</span></h1>
         </div>
       </header>
 
       <form class="search" action="https://html.duckduckgo.com/html/" method="get" target="_blank" rel="noopener">
-        <label for="query">Ne aramak istiyorsun?</label>
+        <label for="query">What do you want to search?</label>
         <div class="search-row">
-          <input id="query" name="q" type="search" placeholder="Bir şeyler ara…" autocomplete="off" autofocus required>
-          <button type="submit" aria-label="Ara">
+          <input id="query" name="q" type="search" placeholder="Search something…" autocomplete="off" autofocus required>
+          <button type="submit" aria-label="Search">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="10.8" cy="10.8" r="6.8"></circle>
               <path d="m16 16 5 5"></path>
@@ -31,12 +31,58 @@
 
       <div class="hint">
         <span class="hint-dot" aria-hidden="true"></span>
-        <p>Adres çubuğunda <strong>ddg</strong> yazıp Tab'a basarak da arayabilirsin.</p>
+        <p>You can also type <strong>ddg</strong> in the address bar, then press Tab.</p>
       </div>
 
+      <button class="setup-toggle" id="setup-toggle" type="button" aria-expanded="false" aria-controls="setup">
+        Set as default search engine
+        <span aria-hidden="true">+</span>
+      </button>
+
+      <section class="setup" id="setup" hidden>
+        <p class="setup-intro">
+          Chrome does not let extensions change the default search engine on Linux or ChromeOS. You can
+          add it once yourself:
+        </p>
+        <ol class="setup-steps">
+          <li>Open the address bar and go to <code>chrome://settings/searchEngines</code>.</li>
+          <li>Under <strong>Site search</strong>, choose <strong>Add</strong>.</li>
+          <li>Fill in the fields below, save, then pick <strong>Make default</strong>.</li>
+        </ol>
+
+        <dl class="setup-values">
+          <div>
+            <dt>Search engine</dt>
+            <dd>
+              <span>DuckDuckGo HTML</span>
+              <button class="copy" type="button" data-copy="DuckDuckGo HTML" data-label="Search engine name">Copy</button>
+            </dd>
+          </div>
+          <div>
+            <dt>Shortcut</dt>
+            <dd>
+              <span>duckduckgo.com</span>
+              <button class="copy" type="button" data-copy="duckduckgo.com" data-label="Shortcut">Copy</button>
+            </dd>
+          </div>
+          <div>
+            <dt>URL</dt>
+            <dd>
+              <span>https://html.duckduckgo.com/html/?q=%s</span>
+              <button class="copy" type="button" data-copy="https://html.duckduckgo.com/html/?q=%s" data-label="URL">Copy</button>
+            </dd>
+          </div>
+        </dl>
+
+        <p class="setup-note">
+          On macOS and Windows the desktop search-override build sets this up for you.
+        </p>
+        <p class="sr-status" id="copy-status" role="status" aria-live="polite"></p>
+      </section>
+
       <footer>
-        <span>Hafif. Hızlı. HTML.</span>
-        <a href="https://html.duckduckgo.com/html/" target="_blank" rel="noopener noreferrer">DuckDuckGo'yu aç <span aria-hidden="true">↗</span></a>
+        <span>Light. Fast. HTML.</span>
+        <a href="https://html.duckduckgo.com/html/" target="_blank" rel="noopener noreferrer">Open DuckDuckGo <span aria-hidden="true">↗</span></a>
       </footer>
     </main>
     <script src="popup.js"></script>

@@ -1,7 +1,7 @@
 "use strict";
 
 chrome.omnibox.setDefaultSuggestion({
-  description: "DuckDuckGo HTML'de ara: %s",
+  description: "Search DuckDuckGo HTML: %s",
 });
 
 chrome.omnibox.onInputEntered.addListener((text, disposition) => {
