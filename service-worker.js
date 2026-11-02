@@ -30,3 +30,20 @@ chrome.omnibox.onInputEntered.addListener((text, disposition) => {
     }
   });
 });
+
+chrome.contextMenus.create({
+  id: "word-search",
+  title: "Kelime Şerası Ara",
+  contexts: ["selection"],
+});
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "word-search" && info.selectionText) {
+    const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(info.selectionText)}`;
+    chrome.tabs.create({ url, active: true }, () => {
+      if (chrome.runtime.lastError) {
+        console.error("Could not open the DuckDuckGo search:", chrome.runtime.lastError.message);
+      }
+    });
+  }
+});
