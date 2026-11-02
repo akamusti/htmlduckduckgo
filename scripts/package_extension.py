@@ -48,8 +48,11 @@ def validate_manifest(manifest: dict, *, desktop_override: bool) -> None:
     if manifest.get("background", {}).get("service_worker") != "service-worker.js":
         raise ValueError("The omnibox service worker is not configured in the manifest.")
 
-    if manifest.get("permissions") or manifest.get("host_permissions"):
-        raise ValueError("This extension should not request browser or host permissions.")
+    if manifest.get("permissions") != ["contextMenus"]:
+        raise ValueError("Only the contextMenus permission is allowed.")
+
+    if manifest.get("host_permissions"):
+        raise ValueError("This extension should not request host permissions.")
 
 
 def _write_archive(output: Path, manifest: dict, files: tuple[str, ...]) -> None:

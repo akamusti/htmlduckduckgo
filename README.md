@@ -1,7 +1,8 @@
 # DuckDuckGo HTML Search
 
 Search DuckDuckGo's lightweight HTML interface from the toolbar popup, or type `ddg`
-followed by <kbd>Tab</kbd> in the address bar.
+followed by <kbd>Tab</kbd> in the address bar. You can also right-click selected text and
+choose **Search "…" with DuckDuckGo HTML**.
 
 ---
 

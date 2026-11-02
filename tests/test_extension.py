@@ -11,14 +11,14 @@ class ExtensionPackageTests(unittest.TestCase):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
 
         self.assertEqual(manifest["manifest_version"], 3)
-        self.assertEqual(manifest["version"], "0.1.0")
+        self.assertEqual(manifest["version"], "0.1.2")
         self.assertEqual(manifest["action"]["default_title"], "Search DuckDuckGo HTML")
         self.assertNotIn("chrome_settings_overrides", manifest)
         self.assertEqual(manifest["omnibox"]["keyword"], "ddg")
         self.assertEqual(manifest["background"]["service_worker"], "service-worker.js")
         self.assertEqual(manifest["action"]["default_popup"], "popup.html")
-        self.assertNotIn("permissions", manifest)
         self.assertNotIn("host_permissions", manifest)
+        self.assertEqual(manifest["permissions"], ["contextMenus"])
 
     def test_desktop_package_enables_default_html_search(self):
         archive_path = ROOT / "dist" / "htmlduckduckgo-chrome-desktop-search-override.zip"
@@ -39,6 +39,14 @@ class ExtensionPackageTests(unittest.TestCase):
         self.assertIn("chrome.omnibox.onInputEntered.addListener", service_worker)
         self.assertIn("encodeURIComponent(text)", service_worker)
         self.assertIn("https://html.duckduckgo.com/html/?q=", service_worker)
+
+    def test_context_menu_search_is_registered_on_install(self):
+        service_worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
+
+        self.assertIn("chrome.runtime.onInstalled.addListener", service_worker)
+        self.assertIn("chrome.contextMenus.create", service_worker)
+        self.assertIn("chrome.contextMenus.onClicked.addListener", service_worker)
+        self.assertIn("encodeURIComponent(info.selectionText)", service_worker)
 
     def test_popup_submits_searches_to_html_endpoint(self):
         popup = (ROOT / "popup.html").read_text(encoding="utf-8")

@@ -31,10 +31,14 @@ chrome.omnibox.onInputEntered.addListener((text, disposition) => {
   });
 });
 
-chrome.contextMenus.create({
-  id: "word-search",
-  title: "Kelime Şerası Ara",
-  contexts: ["selection"],
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.removeAll(() => {
+    chrome.contextMenus.create({
+      id: "word-search",
+      title: 'Search "%s" with DuckDuckGo HTML',
+      contexts: ["selection"],
+    });
+  });
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
